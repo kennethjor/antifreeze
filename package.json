@@ -14,24 +14,25 @@
 	},
 	"main": "antifreeze.js",
 	"dependencies": {
-		"underscore": "~1",
-		"calamity": "~0",
-		"handlebars": "~1",
-		"rivets": "~0"
+		"underscore":     "~ 1.4.3",
+		"calamity":       "~ 0.3.0",
+		"jquery-browser": "~ 1.9.1",
+		"handlebars":     "~ 1.0.10",
+		"rivets":         "~ 0.3.4"
 	},
 	"devDependencies": {
-		"jquery-browser": "~1",
-		"coffee-script": "~1",
-		"grunt": "~0",
-		"grunt-contrib-coffee": "~0",
-		"grunt-contrib-concat": "~0",
-		"grunt-contrib-copy": "~0",
-		"grunt-contrib-handlebars": "~0",
-		"grunt-contrib-less": "~0",
-		"grunt-contrib-watch": "~0",
-		"jessie": "~0",
-		"sinon": "~1",
-		"grunt-notify": "~0"
+		"coffee-script":            "~ 1.6.2",
+		"grunt":                    "~ 0.4.1",
+		"grunt-contrib-coffee":     "~ 0.4.0",
+		"grunt-contrib-concat":     "~ 0.1.3",
+		"grunt-contrib-copy":       "~ 0.4.0",
+		"grunt-contrib-handlebars": "~ 0.5.4",
+		"grunt-contrib-less":       "~ 0.5.0",
+		"grunt-contrib-requirejs":  "~ 0.4.0",
+		"grunt-contrib-watch":      "~ 0.3.1",
+		"jessie":                   "~ 0.4.2",
+		"sinon":                    "~ 1.5.2",
+		"grunt-notify":             "~ 0.1.3"
 	},
 	"licenses": [
 		{
