@@ -1,0 +1,41 @@
+{
+	"fullname": "Antifreeze",
+	"name": "antifreeze",
+	"version": "0.0.1-dev",
+	"description": "Client-side MVP framework.",
+	"keywords": ["mvp", "model-view-presenter", "client", "framework"],
+	"homepage": "https://bitbucket.org/kennethjor/antifreeze",
+	"bugs": "https://bitbucket.org/kennethjor/antifreeze/issues",
+	"author": "Kenneth Jorgensen <kennethjor@gmail.com> (http://kennethjorgensen.com/)",
+	"repository": {
+		"type": "hg",
+		"url": "ssh://hg@bitbucket.org/kennethjor/antifreeze"
+	},
+	"main": "antifreeze.js",
+	"dependencies": {
+		"underscore": "~1",
+		"calamity": "~0",
+		"handlebars": "~1",
+		"rivets": "~0"
+	},
+	"devDependencies": {
+		"jquery-browser": "~1",
+		"coffee-script": "~1",
+		"grunt": "~0",
+		"grunt-contrib-coffee": "~0",
+		"grunt-contrib-concat": "~0",
+		"grunt-contrib-copy": "~0",
+		"grunt-contrib-handlebars": "~0",
+		"grunt-contrib-less": "~0",
+		"grunt-contrib-watch": "~0",
+		"jessie": "~0",
+		"sinon": "~1",
+		"grunt-notify": "~0"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://bitbucket.org/kennethjor/antifreeze/raw/default/LICENSE"
+		}
+	]
+}
