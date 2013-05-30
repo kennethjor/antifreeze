@@ -10,9 +10,9 @@ Antifreeze = version: "<%= pkg.version %>"
 root = this
 # CommonJS
 if typeof exports isnt "undefined"
-	if typeof module isnt "undefined" and module.exports
-		exports = module.exports = Antifreeze
-	exports.Antifreeze = Antifreeze
+	exports = Antifreeze
+else if typeof module isnt "undefined" and module.exports
+	module.exports = Antifreeze
 # AMD
 else if typeof define is "function" and define.amd
 	define ["antifreeze"], Antifreeze

@@ -21,7 +21,7 @@ Antifreeze.View = class View
 		ObjectUtil.configure @, options or {}, classOptions
 		# Assign jQuery if missing.
 		unless _.isFunction @$
-			unless _.isFunction $
+			if typeof $ is "undefined" or not _.isFunction $
 				throw new Error "jQuery not found"
 			@$ = $
 		# Init helpers.
