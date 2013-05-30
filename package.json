@@ -7,6 +7,7 @@
 	"homepage": "https://bitbucket.org/kennethjor/antifreeze",
 	"bugs": "https://bitbucket.org/kennethjor/antifreeze/issues",
 	"author": "Kenneth Jorgensen <kennethjor@gmail.com> (http://kennethjorgensen.com/)",
+	"contributors": ["James Fidler <terrarum@gmail.com> (http://trrrm.com/)"],
 	"repository": {
 		"type": "hg",
 		"url": "ssh://hg@bitbucket.org/kennethjor/antifreeze"
