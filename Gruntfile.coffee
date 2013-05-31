@@ -9,6 +9,7 @@ files = [
 	"src/helpers/RivetsHelper.coffee"
 	"src/View.coffee"
 	"src/Presenter.coffee"
+	"src/Route.coffee"
 ]
 
 module.exports = (grunt) ->
@@ -54,7 +55,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks "grunt-contrib-less"
 	grunt.loadNpmTasks "grunt-contrib-requirejs"
 	grunt.loadNpmTasks "grunt-contrib-watch"
-	grunt.loadNpmTasks "grunt-notify"
+	#grunt.loadNpmTasks "grunt-notify"
 
 	grunt.registerTask "jessie", "Runs Jasmine specs through Jessie.", ->
 		done = @async()

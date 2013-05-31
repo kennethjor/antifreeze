@@ -1,4 +1,4 @@
-$ = require "jquery-browser"
+$ = require "jquery"
 sinon = require "sinon"
 {View, Model} = require "../antifreeze"
 
@@ -189,13 +189,13 @@ describe "View", ->
 			expect(click.callCount).toBe 1
 			expect(callback.callCount).toBe 1
 
-  it "should init a HelperBroker with itself as the context", ->
-    helperContext = null
-    viewTestHelper = sinon.spy -> helperContext = @
-    HelperBroker.add "viewTestHelper", viewTestHelper
-    view = new TestView
-    expect(typeof view.helpers).toBe "object"
-    expect(view.helpers instanceof HelperBroker).toBe true
-    view.helpers.viewTestHelper()
-    expect(helperContext.view).toBe view
-    HelperBroker.add "viewTestHelper", undefined
+	it "should init a HelperBroker with itself as the context", ->
+		helperContext = null
+		viewTestHelper = sinon.spy -> helperContext = @
+		HelperBroker.add "viewTestHelper", viewTestHelper
+		view = new TestView
+		expect(typeof view.helpers).toBe "object"
+		expect(view.helpers instanceof HelperBroker).toBe true
+		view.helpers.viewTestHelper()
+		expect(helperContext.view).toBe view
+		HelperBroker.add "viewTestHelper", undefined

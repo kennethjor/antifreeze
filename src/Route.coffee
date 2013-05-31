@@ -1,3 +1,3 @@
-module.exports = class Route
+Antifreeze.Route = class Route
 	hello: ->
 		"hi"

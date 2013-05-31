@@ -1,4 +1,4 @@
-$ = require "jquery-browser"
+$ = require "jquery"
 sinon = require "sinon"
 {Presenter, View, Model} = require "../antifreeze"
 
