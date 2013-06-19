@@ -1,5 +1,3 @@
-Rivets = require "rivets"
-
 # Add Rivets adapter to work with our models.
 Rivets.configure
 	adapter:

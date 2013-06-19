@@ -1,5 +1,3 @@
-Calamity = require "calamity"
-
 # Base view from which all other views are built.
 #
 # ## Events child views:
