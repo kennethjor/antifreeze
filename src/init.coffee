@@ -5,8 +5,10 @@ root = this
 # Load required libs which may or may not be already defined.
 if typeof require is "function"
 	_ = require "underscore"
-	Calamity = require "calamity"
+	calamity = require "calamity"
 	Rivets = require "rivets"
+	Hasher = require "hasher"
+	Crossroads = require "crossroads"
 else
 	# Underscore.
 	unless typeof root._ is "function"
@@ -20,6 +22,14 @@ else
 	unless typeof root.rivets is "object"
 		throw new Error "Failed to load Rivets from global namespace"
 	Rivets = root.rivets
+	# Hasher
+	unless typeof root.hasher is "object"
+		throw new Error "Failed to load Hasher from global namespace"
+	Hasher = root.hasher
+	# Crossrads
+	unless typeof root.crossroads is "object"
+		throw new Error "Failed to load Crossroads from global namespace"
+	Crossroads = root.crossroads
 
 # Import underscore if necessary.
 if typeof root._ is "undefined" and typeof require is "function"

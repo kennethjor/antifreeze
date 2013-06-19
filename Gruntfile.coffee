@@ -9,6 +9,7 @@ files = [
 	"src/helpers/RivetsHelper.coffee"
 	"src/View.coffee"
 	"src/Presenter.coffee"
+	"src/Router.coffee"
 	"src/Route.coffee"
 ]
 
@@ -36,9 +37,7 @@ module.exports = (grunt) ->
 			# Compiles the sample code
 			sample:
 				files:
-					"build/sample/sample.js": "sample/sample.coffee"
-				options:
-					sourceMap: true
+					"build/sample/sample.js": ["sample/sample.coffee"]
 
 		concat:
 			# Packages the final JS file with a header
@@ -60,6 +59,7 @@ module.exports = (grunt) ->
 				files: [
 					{ expand: true, flatten: true, src: ["build/antifreeze.*"], dest: "build/sample/" }
 					{ src: "sample/index.html",                                 dest: "build/sample/index.html" }
+					{ src: "node_modules/jquery-browser/lib/jquery.js",         dest: "build/sample/jquery.js" }
 					{ src: "node_modules/underscore/underscore.js",             dest: "build/sample/underscore.js" }
 					{ src: "node_modules/calamity/calamity.js",                 dest: "build/sample/calamity.js" }
 					{ src: "node_modules/rivets/lib/rivets.js",                 dest: "build/sample/rivets.js" }
@@ -101,6 +101,6 @@ module.exports = (grunt) ->
 		"coffee:all",
 		"coffee:framework",
 		"concat:dist",
-		"jessie",
+		#"jessie",
 		"sample"
 	]

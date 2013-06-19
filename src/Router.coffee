@@ -1,28 +1,65 @@
-crossroads = require "crossroads"
-Calamity = require "calamity"
-
 Antifreeze.Router = class Router
-	# Local event bus with `on()` and `trigger()`.
-	Calamity.emitter @prototype
+	Calamity.proxy @prototype
+	EVENT_ROUTED = @EVENT_ROUTED = "antifreeze:router.routed"
 
 	constructor: ->
+		@_attached = false
 		@_routes = []
 		@_crossroads = crossroads.create()
+		@_crossroads.routed.add _.bind(@_crossroadsRouted, @)
 
-	# Adds a `Route` to the routing list.
-	add: (options) ->
-		# Conveerts strings to options, assuming string is the pattern.
-		if _.isString options
-			options = pattern: options
-		# Convert object to `Route` assuming object is an options object.
-		if _.isObject options
-			options = new Route options
-		# Check
-		unless options instanceof Route is false
-			throw new Error "No Route provided or constructed"
-		# Add route to Crossroads
-		crossroadsRoute = @_crossroads.addRoute options.pattern
-		options._crossroads = crossroadsRoute
+		@initRoutes()
+
+	# Initialises the internal routes.
+	# Override to implement.
+	initRoutes: () ->
+		# Empty
+
+	# Adds a routing pattern to the routing list.
+	add: (pattern, options) ->
+		options or= {}
+		# Construct new `Route`.
+		route = new Route pattern, options
+		# Create route in Crossroads and add to route.
+		crossroadsRoute = @_crossroads.addRoute pattern
+		route._crossroads = crossroadsRoute
 		# Add `Route` and return
-		@_routes.push options
-		return options
+		@_routes.push route
+
+		return route
+
+	# Internal handler for when Crossroads reports a routing occured.
+	_crossroadsRouted: (hash, event) ->
+		params = event.params
+		crossroadsRoute = event.route
+		# Find route
+		route = null
+		for r in @_routes
+			if crossroadsRoute is r._crossroads
+				route = r
+				break
+		# Unknown route, pretend nothing happened @todo we should probably tell the application
+		return if route is null
+		# @todo implement places
+		# Publish event
+		@publish EVENT_ROUTED,
+			hash: hash
+			route: route
+			params: params
+		return
+
+	# Attaches the router to the browser.
+	attach: () ->
+		# Only attach once.
+		return if @_attached
+		# Statically import Crossroads instance and create event handler
+		crossroads = @_crossroads
+		parseHash = (hash) -> crossroads.parse hash
+		# Add event handler to Hasher.
+		Hasher.initialized.add parseHash
+		Hasher.changed.add parseHash
+		# Initialize Hasher.
+		Hasher.init()
+
+		@_attached = true
+		return
