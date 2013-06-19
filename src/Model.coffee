@@ -1,5 +1,3 @@
-Calamity = require "calamity"
-
 Antifreeze.Model = class Model
 	Calamity.emitter @prototype
 

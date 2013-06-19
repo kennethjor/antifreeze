@@ -60,6 +60,9 @@ module.exports = (grunt) ->
 				files: [
 					{ expand: true, flatten: true, src: ["build/antifreeze.*"], dest: "build/sample/" }
 					{ src: "sample/index.html", dest: "build/sample/index.html" }
+					{ src: "node_modules/calamity/calamity.js", dest: "build/sample/calamity.js" }
+					{ src: "node_modules/underscore/underscore.js", dest: "build/sample/underscore.js" }
+					{ src: "node_modules/rivets/lib/rivets.js", dest: "build/sample/rivets.js" }
 				]
 
 		watch:

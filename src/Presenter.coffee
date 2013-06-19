@@ -1,5 +1,3 @@
-Calamity = require "calamity"
-
 # Base presenter.
 Antifreeze.Presenter = class Presenter
 	# Global event bus with `_subscribe()` and `_publish()`.
