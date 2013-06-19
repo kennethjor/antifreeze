@@ -56,7 +56,7 @@ Antifreeze.Presenter = class Presenter
 	onViewEvent: (event, callback) ->
 		@view().on event, _.bind(callback, @)
 
-	# Adds a presenter as a subpresente using the specified name.
+	# Adds a presenter as a subpresenter using the specified name.
 	add: (name, presenter) ->
 		@_presenters[name] = presenter
 		# If view already exists, add subview immediately
