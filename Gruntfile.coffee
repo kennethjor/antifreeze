@@ -59,10 +59,13 @@ module.exports = (grunt) ->
 			sample:
 				files: [
 					{ expand: true, flatten: true, src: ["build/antifreeze.*"], dest: "build/sample/" }
-					{ src: "sample/index.html", dest: "build/sample/index.html" }
-					{ src: "node_modules/calamity/calamity.js", dest: "build/sample/calamity.js" }
-					{ src: "node_modules/underscore/underscore.js", dest: "build/sample/underscore.js" }
-					{ src: "node_modules/rivets/lib/rivets.js", dest: "build/sample/rivets.js" }
+					{ src: "sample/index.html",                                 dest: "build/sample/index.html" }
+					{ src: "node_modules/underscore/underscore.js",             dest: "build/sample/underscore.js" }
+					{ src: "node_modules/calamity/calamity.js",                 dest: "build/sample/calamity.js" }
+					{ src: "node_modules/rivets/lib/rivets.js",                 dest: "build/sample/rivets.js" }
+					{ src: "node_modules/signals/dist/signals.js",              dest: "build/sample/signals.js" }
+					{ src: "node_modules/hasher/dist/js/hasher.js",             dest: "build/sample/hasher.js" }
+					{ src: "node_modules/crossroads/dist/crossroads.js",        dest: "build/sample/crossroads.js" }
 				]
 
 		watch:
