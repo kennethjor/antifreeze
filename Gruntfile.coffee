@@ -17,20 +17,31 @@ module.exports = (grunt) ->
 		pkg: "<json:package.json>"
 
 		coffee:
+			# Compiles all files to check for compilation errors
 			all:
 				expand: true
 				cwd: ""
 				src: ["src/**/*.coffee", "spec/**/*.coffee"]
 				dest: "build/"
 				ext: ".js"
-			dist:
+
+			# Compiles the framework into a single JS file with source map
+			framework:
 				files:
-					"build/antifreeze.js": "build/antifreeze.coffee"
+					"build/antifreeze.js": files
+				options:
+					join: true
+					sourceMap: true
+
+			# Compiles the sample code
+			sample:
+				files:
+					"build/sample/sample.js": "sample/sample.coffee"
+				options:
+					sourceMap: true
 
 		concat:
-			coffee:
-				src: files
-				dest: "build/antifreeze.coffee"
+			# Packages the final JS file with a header
 			dist:
 				options:
 					banner: "/*! <%= pkg.fullname %> <%= pkg.version %> - MIT license */\n"
@@ -39,12 +50,20 @@ module.exports = (grunt) ->
 				dest: "build/antifreeze.js"
 
 		copy:
+			# Copies the built dist file to the root for npm packaging
 			dist:
 				files:
 					"antifreeze.js": "build/antifreeze.js"
 
+			# Copies appropriate files needed for the sample
+			sample:
+				files: [
+					{ expand: true, flatten: true, src: ["build/antifreeze.*"], dest: "build/sample/" }
+					{ src: "sample/index.html", dest: "build/sample/index.html" }
+				]
+
 		watch:
-			files: ["src/**", "spec/**"]
+			files: ["src/**", "spec/**", "sample/**"]
 			tasks: "default"
 
 	# Load grunt plugins.
@@ -68,12 +87,14 @@ module.exports = (grunt) ->
 			else
 				done true
 
+	# Build sample site
+	grunt.registerTask "sample", ["coffee:sample", "copy:sample"]
+
 	# Default task.
 	grunt.registerTask "default", [
 		"coffee:all",
-		"concat:coffee",
-		"coffee:dist",
+		"coffee:framework",
 		"concat:dist",
-		"coffee:dist",
-		"jessie"
+		"jessie",
+		"sample"
 	]
