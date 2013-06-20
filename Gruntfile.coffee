@@ -8,6 +8,7 @@ files = [
 	"src/HelperBroker.coffee"
 	"src/helpers/RivetsHelper.coffee"
 	"src/View.coffee"
+	"src/views/DeckView.coffee"
 	"src/Presenter.coffee"
 	"src/Router.coffee"
 	"src/Route.coffee"
@@ -100,7 +101,7 @@ module.exports = (grunt) ->
 	grunt.registerTask "default", [
 		"coffee:all",
 		"coffee:framework",
+		"sample"
 		"concat:dist",
 		#"jessie",
-		"sample"
 	]

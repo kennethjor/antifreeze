@@ -1,6 +1,5 @@
 Antifreeze.Router = class Router
-	Calamity.proxy @prototype
-	EVENT_ROUTED = @EVENT_ROUTED = "antifreeze:router.routed"
+	Calamity.emitter @prototype
 
 	constructor: ->
 		@_attached = false
@@ -46,7 +45,7 @@ Antifreeze.Router = class Router
 		# Assemble values with IDs
 		namedParams = _.object route._paramIds, params
 		# Publish event
-		@publish EVENT_ROUTED,
+		@trigger "routed",
 			hash: hash
 			route: route
 			params: params

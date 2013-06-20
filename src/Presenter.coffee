@@ -20,6 +20,7 @@ Antifreeze.Presenter = class Presenter
 
 	# Sets or gets the model.
 	model: (model) ->
+		# Setter.
 		if model
 			# Auto-construct model.
 			if _.isObject(model) and model instanceof Model isnt true
@@ -29,6 +30,9 @@ Antifreeze.Presenter = class Presenter
 			# Propagate to view.
 			if @_view then @_view.model model
 			return
+		# Construct default.
+		unless @_model then @model {}
+		# Getter.
 		return @_model
 
 	# Sets the view constructor or gets the view instance.
