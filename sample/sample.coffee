@@ -16,8 +16,7 @@ class HomeView extends Antifreeze.View
 
 $ ->
 	# Create and attach RootPresenter
-	root = new Antifreeze.RootPresenter
-
+	#root = new Antifreeze.RootPresenter
 
 	# Init router
 	router = new Router()

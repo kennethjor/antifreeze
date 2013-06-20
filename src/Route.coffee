@@ -1,5 +1,7 @@
 Antifreeze.Route = class Route
-	# Local event bus with `on()` and `trigger()`.
+	EVENT_MATCHED = @EVENT_MATCHED = "matched"
+
+	# Local event bus.
 	Calamity.emitter @prototype
 
 	constructor: (pattern, @options) ->
@@ -7,4 +9,3 @@ Antifreeze.Route = class Route
 		# Check if pattern is a string.
 		unless _.isString pattern
 			throw new Error "Pattern must be a string, " + (typeof pattern) + " supplied"
-

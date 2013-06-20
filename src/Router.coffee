@@ -23,6 +23,8 @@ Antifreeze.Router = class Router
 		# Create route in Crossroads and add to route.
 		crossroadsRoute = @_crossroads.addRoute pattern
 		route._crossroads = crossroadsRoute
+		# Extract paramter IDs
+		route._paramIds = @_crossroads.patternLexer.getParamIds(pattern)
 		# Add `Route` and return
 		@_routes.push route
 
@@ -41,11 +43,14 @@ Antifreeze.Router = class Router
 		# Unknown route, pretend nothing happened @todo we should probably tell the application
 		return if route is null
 		# @todo implement places
+		# Assemble values with IDs
+		namedParams = _.object route._paramIds, params
 		# Publish event
 		@publish EVENT_ROUTED,
 			hash: hash
 			route: route
 			params: params
+			namedParams: namedParams
 		return
 
 	# Attaches the router to the browser.
