@@ -6,22 +6,32 @@
 # * `newElement`
 # * `beforeRender`
 # * `afterRender`
+# * `beforeShow` - NOT IMPLEMENTED
+# * `afterShow` - NOT IMPLEMENTED
+# * `beforeHide` - NOT IMPLEMENTED
+# * `afterHide` - NOT IMPLEMENTED
 #
 Antifreeze.View = class View
 	# Local event bus with `on()` and `_trigger()`.
 	Calamity.emitter @prototype
 	# Options.
-	classOptions = "$,tagName,className,model,element".split ","
+	classOptions = "tagName,className,model,element".split ","
+
+	# Default tag name for default elements.
+	tagName: "div"
 
 	constructor: (options) ->
 		options or= {}
-		# Configure.
-		ObjectUtil.configure @, options or {}, classOptions
-		# Assign jQuery if missing.
-		unless _.isFunction @$
+		# Attach custom jQuery is supplied, otherwise get it from global space.
+		if options.$
+			@$ = options.$
+		else
 			if typeof $ is "undefined" or not _.isFunction $
 				throw new Error "jQuery not found"
 			@$ = $
+
+		# Configure.
+		ObjectUtil.configure @, options or {}, classOptions
 		# Init helpers.
 		@helpers = new HelperBroker @
 		# Subview container.

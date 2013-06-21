@@ -1,7 +1,7 @@
 {
 	"fullname": "Antifreeze",
 	"name": "antifreeze",
-	"version": "0.0.2-dev",
+	"version": "0.1.0-dev",
 	"description": "Client-side MVP framework.",
 	"keywords": ["mvp", "model-view-presenter", "client", "framework", "ui"],
 	"homepage": "https://bitbucket.org/kennethjor/antifreeze",
@@ -17,7 +17,9 @@
 		"underscore":               "~ 1.4.3",
 		"calamity":                 "~ 0.3.0",
 		"handlebars":               "~ 1.0.10",
-		"rivets":                   "~ 0.3.4"
+		"rivets":                   "~ 0.3.4",
+		"crossroads":               "~ 0.12.0",
+		"hasher":                   "~ 1.1.4"
 	},
 	"devDependencies": {
 		"coffee-script":            "~ 1.6.3",
@@ -32,7 +34,9 @@
 		"jessie":                   "~ 0.4.2",
 		"sinon":                    "~ 1.5.2",
 		"grunt-notify":             "~ 0.1.3",
-		"jquery":                   "~ 1.8.3"
+		"jquery":                   "  1.8.2",
+		"jquery-browser":           "  1.8.2-1",
+		"signals":                  "~ 1.0.0"
 	},
 	"licenses": [
 		{
