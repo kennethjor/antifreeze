@@ -45,11 +45,14 @@ Antifreeze.Router = class Router
 		# Assemble values with IDs
 		namedParams = _.object route._paramIds, params
 		# Publish event
-		@trigger "routed",
+		event =
 			hash: hash
+			router: @
 			route: route
 			params: params
 			namedParams: namedParams
+		@trigger "routed", event
+		route.trigger "routed", event
 		return
 
 	# Attaches the router to the browser.

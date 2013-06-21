@@ -1,6 +1,8 @@
 # Base presenter.
 Antifreeze.Presenter = class Presenter
-	# Global event bus with `_subscribe()` and `_publish()`.
+	# Local events.
+	Calamity.emitter @prototype
+	# Global events.
 	Calamity.proxy @prototype
 	# Options.
 	classOptions = "view,model,element".split ","
@@ -44,14 +46,14 @@ Antifreeze.Presenter = class Presenter
 			@_view = undefined
 			return
 		else
-			# Lazy-construct the view
+			# Lazy-construct the view.
 			unless @_view
 				@_view = new @_viewConstructor
 					model: @model()
 					element: @element
-				# Add any sub-views we might have
-				for own name, presenter of @_presenters
-					@_view.add name, presenter.view()
+				# Add any sub-views we might have.
+				for own name, options of @_presenters
+					@_view.add name, options.presenter.view()
 		return @_view
 
 	# Attaches an event on the view.
@@ -59,17 +61,28 @@ Antifreeze.Presenter = class Presenter
 		@view().on event, _.bind(callback, @)
 
 	# Adds a presenter as a subpresenter using the specified name.
-	add: (name, presenter) ->
-		@_presenters[name] = presenter
-		# If view already exists, add subview immediately
+	add: (name, options) ->
+		# Create options object.
+		options or= {}
+		if options instanceof Presenter then options = presenter: options
+		presenter = options.presenter
+		unless presenter then throw new Error "Presenter not supplied"
+		# Store.
+		@_presenters[name] = options
+		# If view already exists, add subview immediately.
 		if @_view then @_view.add name, presenter.view()
+		# Fire event.
+		@trigger "addedPresenter",
+			name: name
+			options: options
+			presenter: presenter
 		return @
 
 	# Returns true if this presenter has an attached subpresenter by the given name.
 	has: (name) ->
 		return _.has @_presenters, name
 
-	# Returns a subpresenter by name, or undefined if it doesn't exist.
+	# Returns a subpresenter configuration by name, or undefined if it doesn't exist.
 	get: (name) ->
 		return @_presenters[name]
 
