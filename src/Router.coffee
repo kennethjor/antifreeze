@@ -1,3 +1,7 @@
+# ## Local events triggered:
+#
+# * `routed`
+#
 Antifreeze.Router = class Router
 	Calamity.emitter @prototype
 
@@ -39,7 +43,7 @@ Antifreeze.Router = class Router
 			if crossroadsRoute is r._crossroads
 				route = r
 				break
-		# Unknown route, pretend nothing happened @todo we should probably tell the application
+		# Unknown route, pretend nothing happened @todo we should probably complain and tell someone
 		return if route is null
 		# @todo implement places
 		# Assemble values with IDs

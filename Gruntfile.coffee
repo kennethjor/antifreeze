@@ -10,6 +10,7 @@ files = [
 	"src/View.coffee"
 	"src/views/DeckView.coffee"
 	"src/Presenter.coffee"
+	"src/presenters/RoutingPresenter.coffee"
 	"src/Router.coffee"
 	"src/Route.coffee"
 ]

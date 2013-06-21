@@ -1,4 +1,9 @@
-# Base presenter.
+# Base presenter
+#
+# ## Local events triggered:
+#
+# * `presenterAdded`
+#
 Antifreeze.Presenter = class Presenter
 	# Local events.
 	Calamity.emitter @prototype
@@ -72,7 +77,7 @@ Antifreeze.Presenter = class Presenter
 		# If view already exists, add subview immediately.
 		if @_view then @_view.add name, presenter.view()
 		# Fire event.
-		@trigger "addedPresenter",
+		@trigger "presenterAdded",
 			name: name
 			options: options
 			presenter: presenter

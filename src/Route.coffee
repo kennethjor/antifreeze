@@ -1,6 +1,8 @@
+# ## Local events triggered:
+#
+# * `routed`
+#
 Antifreeze.Route = class Route
-	EVENT_MATCHED = @EVENT_MATCHED = "matched"
-
 	# Local event bus.
 	Calamity.emitter @prototype
 
