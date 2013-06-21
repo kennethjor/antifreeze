@@ -8,7 +8,7 @@ Antifreeze.Router = class Router
 	constructor: ->
 		@_attached = false
 		@_routes = []
-		@_crossroads = crossroads.create()
+		@_crossroads = Crossroads.create()
 		@_crossroads.routed.add _.bind(@_crossroadsRouted, @)
 
 		@initRoutes()

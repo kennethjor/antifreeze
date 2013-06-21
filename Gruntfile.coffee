@@ -104,5 +104,6 @@ module.exports = (grunt) ->
 		"coffee:framework",
 		"sample"
 		"concat:dist",
+		"copy:dist"
 		#"jessie",
 	]
