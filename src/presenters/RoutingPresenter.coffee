@@ -3,7 +3,6 @@
 # This can be used in combination with the `DeckView` to show different views based on routes.
 Antifreeze.RoutingPresenter = class RoutingPresenter extends Presenter
 	constructor: ->
-		super
 		# Wait for subpresenters to be added.
 		@on "presenterAdded", (event) ->
 			data = event.data
@@ -21,3 +20,4 @@ Antifreeze.RoutingPresenter = class RoutingPresenter extends Presenter
 				@model().set page: name
 				# Set param data on subpresenter. @todo implement places
 				presenter.model().set params
+		super
