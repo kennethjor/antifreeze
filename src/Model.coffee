@@ -9,6 +9,9 @@ Antifreeze.Model = class Model
 	constructor: (values) ->
 		# ID.
 		@_id = null
+		if values.id?
+			@id values.id
+			values.id = undefined
 		# Prepare internal containers.
 		@_values = {}
 		# Populate default values.
