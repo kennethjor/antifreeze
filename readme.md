@@ -5,6 +5,7 @@ Antifreeze is an [model-view-presenter](http://en.wikipedia.org/wiki/Model%E2%80
 ## 0.1.2-dev
 
 * Basic `Map` implementation.
+* Basic `Collection` implementation.
 * Removed `Models` default recursive JSON serialization.
 * Implemented default functions in `Model`.
 
