@@ -1,4 +1,6 @@
 Antifreeze.Collection = class Collection
+	Calamity.emitter @prototype
+
 	constructor: ->
 		@_items = []
 
@@ -35,6 +37,12 @@ Antifreeze.Collection = class Collection
 	# Returns the sizxe of the collection.
 	size: (obj) ->
 		return @_items.length
+
+	# Iterator.
+	each: (fn) ->
+		for entry in @_items
+			fn.apply @, [entry]
+		return @
 
 	toJSON: ->
 		json = []
