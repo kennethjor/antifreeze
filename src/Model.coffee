@@ -7,6 +7,8 @@ Antifreeze.Model = class Model
 
 	# Constructor.
 	constructor: (values) ->
+		# ID.
+		@_id = null
 		# Prepare internal containers.
 		@_values = {}
 		# Populate default values.
@@ -23,6 +25,12 @@ Antifreeze.Model = class Model
 			if _.isFunction val
 				values[key] = val.apply values
 		return values
+
+	# ID getter/setter.
+	id: (id) ->
+		if id?
+			@_id = id
+		return @_id
 
 	# Sets one or more values.
 	# Can be called with a key and value, or with an object.
