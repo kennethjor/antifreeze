@@ -76,3 +76,8 @@ Antifreeze.Model = class Model
 		#	if val and typeof val.toJSON is "function"
 		#		json[key] = val.toJSON()
 		return json
+
+	# Serializes the model for persistent storage.
+	# By default this returns a JSON object, but feel free to extend.
+	serialize: ->
+		return @toJSON()
