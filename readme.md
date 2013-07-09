@@ -2,6 +2,12 @@ Antifreeze is an [model-view-presenter](http://en.wikipedia.org/wiki/Model%E2%80
 
 # Changelog
 
+## 0.1.2-dev
+
+* Basic `Map` implementation.
+* Removed `Models` default recursive JSON serialization.
+* Implemented default functions in `Model`.
+
 ## 0.1.1 (2013-06-27)
 
 * Fixed bug where adding presenters in the `init()` method when extending `Presenter` would not work.

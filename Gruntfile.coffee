@@ -5,6 +5,7 @@ files = [
 	"src/ObjectUtil.coffee"
 	"src/Model.coffee"
 	"src/Collection.coffee"
+	"src/Map.coffee"
 	"src/HelperBroker.coffee"
 	"src/helpers/RivetsHelper.coffee"
 	"src/View.coffee"

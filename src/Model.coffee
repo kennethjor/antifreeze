@@ -2,16 +2,27 @@ Antifreeze.Model = class Model
 	Calamity.emitter @prototype
 
 	# Default values are assigned automatically.
+	# Any functions will be executed in the context of the values object, and the return value will be the value.
 	defaults: {}
 
 	# Constructor.
 	constructor: (values) ->
 		# Prepare internal containers.
 		@_values = {}
-		# Add default values to initial values.
-		_.defaults values, @defaults
+		# Populate default values.
+		values = @_defaults values
 		# Set values.
 		@set values
+
+	# Populates default values.
+	_defaults: (values) ->
+		for own key, val of @defaults
+			# Ignore existing values.
+			continue if values[key]?
+			# Execute default function.
+			if _.isFunction val
+				values[key] = val.apply values
+		return values
 
 	# Sets one or more values.
 	# Can be called with a key and value, or with an object.
@@ -60,7 +71,8 @@ Antifreeze.Model = class Model
 	# Serializes the model into a plain JSON object.
 	toJSON: ->
 		json = _.clone @_values
-		for own key, val of json
-			if val and typeof val.toJSON is "function"
-				json[key] = val.toJSON()
+		# Convert children to JSON.
+		#for own key, val of json
+		#	if val and typeof val.toJSON is "function"
+		#		json[key] = val.toJSON()
 		return json
