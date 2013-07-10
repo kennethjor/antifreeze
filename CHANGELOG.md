@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0 (dev)
+## 0.2.0 (2013-07-10)
 * *Feature:* Basic `Collection` implementation.
 * *Feature:* Basic `Set` implementation.
 * *Feature:* Basic `Map` implementation.
