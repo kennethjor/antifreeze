@@ -27,7 +27,10 @@ RivetsHelper = Antifreeze.RivetsHelper =
 		# Prepare data
 		data = convertData view.model()
 		# Bind.
-		Rivets.bind view.element(), data
+		if @rivetsView
+			console.log "clearing old rivets view"
+			@rivetsView.unbind()
+		@rivetsView = Rivets.bind view.element(), data
 
 	# Prepares the model data in a format consumable by Rivets.
 	# For all references, Rivets requires the initial level to be a plain object, thus single-level references are not
