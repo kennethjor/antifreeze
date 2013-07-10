@@ -38,6 +38,10 @@ Antifreeze.Collection = class Collection
 	size: (obj) ->
 		return @_items.length
 
+	# Returns true if the collection is empty.
+	isEmpty: ->
+		return @size() is 0
+
 	# Iterator.
 	each: (fn) ->
 		for entry in @_items

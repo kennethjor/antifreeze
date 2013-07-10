@@ -27,6 +27,8 @@ Antifreeze.Model = class Model
 			# Execute default function.
 			if _.isFunction val
 				values[key] = val.apply values
+			else
+				values[key] = val
 		return values
 
 	# ID getter/setter.

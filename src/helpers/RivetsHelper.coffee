@@ -28,7 +28,6 @@ RivetsHelper = Antifreeze.RivetsHelper =
 		data = convertData view.model()
 		# Bind.
 		if @rivetsView
-			console.log "clearing old rivets view"
 			@rivetsView.unbind()
 		@rivetsView = Rivets.bind view.element(), data
 

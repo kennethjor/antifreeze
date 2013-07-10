@@ -7,6 +7,7 @@
 * *Feature:* Removed `Models` default recursive JSON serialization.
 * *Feature:* Implemented default functions in `Model`.
 * *Fix:* Added automatic unbinding of the `Rivets.View` instance in `RivetsHelper`.
+* *Fix:* `Model` never applied its default values.
 
 ## 0.1.1 (2013-06-27)
 

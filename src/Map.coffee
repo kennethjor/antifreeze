@@ -68,8 +68,12 @@ Antifreeze.Map = class Map
 		return @
 
 	# Returns the number of items in the map.
-	length: ->
+	size: ->
 		return @_items.length
+
+	# Returns true if the map is empty.
+	isEmpty: ->
+		return @size() is 0
 
 	# Returns a JSON representation of the `Map`.
 	# This will return an object with string-representations of the key objects as the index,
