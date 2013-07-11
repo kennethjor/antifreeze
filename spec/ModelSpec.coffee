@@ -46,52 +46,60 @@ describe "Model", ->
 		expect(_.contains(keys, "foo")).toBe true
 		expect(_.contains(keys, "bar")).toBe true
 
-	it "should serialize to a json object", ->
-		model = new Model
-			foo: "bar"
-			abc: "def"
-		json = model.toJSON()
-		expect(json.foo).toBe "bar"
-		expect(json.abc).toBe "def"
+	describe "change events", ->
+		it "should should trigger specific and general change events with appropriate data", ->
+			model = new Model
+			generalEvent = null
+			specificEvent = null
+			general = sinon.spy (event) ->
+				generalEvent = event
+			specific = sinon.spy (event) ->
+				specificEvent = event
+			model.on "change", general
+			model.on "change:foo", specific
+			model.set foo: "bar"
+			waitsFor (-> general.called and specific.called), "Events not fired", 100
+			runs ->
+				expect(general.callCount).toBe 1
+				expect(specific.callCount).toBe 1
+				expect(typeof generalEvent).toBe "object"
+				expect(typeof specificEvent).toBe "object"
+				expect(generalEvent.data.model).toBe model
+				expect(specificEvent.data.model).toBe model
+				expect(specificEvent.data.value).toBe "bar"
 
-	it "should should trigger specific and general change events with appropriate data", ->
-		model = new Model
-		generalEvent = null
-		specificEvent = null
-		general = sinon.spy (event) ->
-			generalEvent = event
-		specific = sinon.spy (event) ->
-			specificEvent = event
-		model.on "change", general
-		model.on "change:foo", specific
-		model.set foo: "bar"
-		waitsFor (-> general.called and specific.called), "Events not fired", 100
-		runs ->
-			expect(general.callCount).toBe 1
-			expect(specific.callCount).toBe 1
-			expect(typeof generalEvent).toBe "object"
-			expect(typeof specificEvent).toBe "object"
-			expect(generalEvent.data.model).toBe model
-			expect(specificEvent.data.model).toBe model
-			expect(specificEvent.data.value).toBe "bar"
+		it "should change all values before triggering events when multiple values are changed", ->
+			callback = sinon.spy()
+			model = new Model
+			model.on "change", callback
+			model.set
+				foo: "foo"
+				bar: "bar"
+			waitsFor (-> callback.called), "Event not fired", 100
+			runs ->
+				expect(callback.callCount).toBe 1
 
-	it "should change all values before triggering events when multiple values are changed", ->
-		callback = sinon.spy()
-		model = new Model
-		model.on "change", callback
-		model.set
-			foo: "foo"
-			bar: "bar"
-		waitsFor (-> callback.called), "Event not fired", 100
-		runs ->
-			expect(callback.callCount).toBe 1
+		it "should report changes on sub-models"
 
-	it "should should serialize models recursively", ->
-		model = new Model
-			foo: "foo"
-			bar: new Model
-				qwerty: "zxcvbn"
-		json = JSON.stringify model.toJSON()
-		expect(json).toBe '{"foo":"foo","bar":{"qwerty":"zxcvbn"}}'
+		it "should not report changes on detached sub-models"
 
-	it "should should detect circular references in serialization"
+	describe "serialization", ->
+		it "should serialize to a json object", ->
+			model = new Model
+				foo: "bar"
+				abc: "def"
+			json = model.toJSON()
+			expect(json.foo).toBe "bar"
+			expect(json.abc).toBe "def"
+
+		it "should not recursively serialize models"
+
+		xit "should should serialize models recursively", ->
+			model = new Model
+				foo: "foo"
+				bar: new Model
+					qwerty: "zxcvbn"
+			json = JSON.stringify model.toJSON()
+			expect(json).toBe '{"foo":"foo","bar":{"qwerty":"zxcvbn"}}'
+
+		xit "should should detect circular references in serialization"
