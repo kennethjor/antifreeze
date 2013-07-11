@@ -22,9 +22,13 @@ Antifreeze.View = class View
 
 	constructor: (options) ->
 		options or= {}
-		# Attach custom jQuery is supplied, otherwise get it from global space.
-		if options.$
+		# Attach custom jQuery if supplied.
+		if options.$?
 			@$ = options.$
+		# Check if we have one set on the type.
+		else if @$
+			# Nothing
+		# Finally try and grab is from the environment.
 		else
 			if typeof $ is "undefined" or not _.isFunction $
 				throw new Error "jQuery not found"

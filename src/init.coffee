@@ -7,7 +7,7 @@ if typeof require is "function"
 	_ = require "underscore"
 	calamity = require "calamity"
 	Rivets = require "rivets"
-	Hasher = require "hasher"
+	Hasher = require "hasher" if @window?
 	Crossroads = require "crossroads"
 else
 	# Underscore.
@@ -25,7 +25,7 @@ else
 	# Hasher
 	unless typeof root.hasher is "object"
 		throw new Error "Failed to load Hasher from global namespace"
-	Hasher = root.hasher
+	Hasher = root.hasher if @window?
 	# Crossrads
 	unless typeof root.crossroads is "object"
 		throw new Error "Failed to load Crossroads from global namespace"

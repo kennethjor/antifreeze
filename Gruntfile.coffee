@@ -107,5 +107,5 @@ module.exports = (grunt) ->
 		"sample"
 		"concat:dist",
 		"copy:dist"
-		#"jessie",
+		"jessie"
 	]

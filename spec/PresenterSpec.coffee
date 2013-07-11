@@ -107,7 +107,7 @@ describe "Presenter", ->
 			subPresenter = new TestPresenter
 				view: TestView
 			presenter.add "name", subPresenter
-			expect(presenter.get "name").toBe subPresenter
+			expect(presenter.get("name").presenter).toBe subPresenter
 
 		it "should have their views passed on as named sub-views when the view is first constructed", ->
 			View1 = sinon.spy TestView

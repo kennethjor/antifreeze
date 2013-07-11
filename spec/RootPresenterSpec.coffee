@@ -1,6 +1,6 @@
 {RootPresenter, Presenter} = require "../antifreeze"
 
-describe "RootPresenter", ->
+xdescribe "RootPresenter", ->
 	it "should handle routes to presenters", ->
 		root = new RootPresenter
 		router = root._router

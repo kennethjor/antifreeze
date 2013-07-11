@@ -19,10 +19,16 @@ Antifreeze.Router = class Router
 		# Empty
 
 	# Adds a routing pattern to the routing list.
+	# Returns the added route.
 	add: (pattern, options) ->
 		options or= {}
-		# Construct new `Route`.
-		route = new Route pattern, options
+		# Construct new `Route` unless supplied.
+		route = null
+		if pattern instanceof Route
+			route = pattern
+			pattern = route.pattern
+		else
+			route = new Route pattern
 		# Create route in Crossroads and add to route.
 		crossroadsRoute = @_crossroads.addRoute pattern
 		route._crossroads = crossroadsRoute
