@@ -47,37 +47,39 @@ describe "Model", ->
 		expect(_.contains(keys, "bar")).toBe true
 
 	describe "change events", ->
-		it "should should trigger specific and general change events with appropriate data", ->
+		model = null
+		change = null
+		changeEvent = null
+		changeFoo = null
+		changeFooEvent = null
+		beforeEach ->
 			model = new Model
-			generalEvent = null
-			specificEvent = null
-			general = sinon.spy (event) ->
-				generalEvent = event
-			specific = sinon.spy (event) ->
-				specificEvent = event
-			model.on "change", general
-			model.on "change:foo", specific
+			change = sinon.spy (event) -> changeEvent = event
+			model.on "change", change
+			changeEvent = null
+			changeFoo = sinon.spy (event) -> changeFooEvent = event
+			model.on "change:foo", changeFoo
+			changeFooEvent = null
+
+		it "should should trigger specific and general change events with appropriate data", ->
 			model.set foo: "bar"
-			waitsFor (-> general.called and specific.called), "Events not fired", 100
+			waitsFor (-> change.called and changeFoo.called), "Events not fired", 100
 			runs ->
-				expect(general.callCount).toBe 1
-				expect(specific.callCount).toBe 1
-				expect(typeof generalEvent).toBe "object"
-				expect(typeof specificEvent).toBe "object"
-				expect(generalEvent.data.model).toBe model
-				expect(specificEvent.data.model).toBe model
-				expect(specificEvent.data.value).toBe "bar"
+				expect(change.callCount).toBe 1
+				expect(changeFoo.callCount).toBe 1
+				expect(typeof changeEvent).toBe "object"
+				expect(typeof changeFooEvent).toBe "object"
+				expect(changeEvent.data.model).toBe model
+				expect(changeFooEvent.data.model).toBe model
+				expect(changeFooEvent.data.value).toBe "bar"
 
 		it "should change all values before triggering events when multiple values are changed", ->
-			callback = sinon.spy()
-			model = new Model
-			model.on "change", callback
 			model.set
 				foo: "foo"
 				bar: "bar"
-			waitsFor (-> callback.called), "Event not fired", 100
+			waitsFor (-> change.called), "Event not fired", 100
 			runs ->
-				expect(callback.callCount).toBe 1
+				expect(change.callCount).toBe 1
 
 		it "should report changes on sub-models"
 
