@@ -54,9 +54,11 @@ describe "Model", ->
 		changeFooEvent = null
 		beforeEach ->
 			model = new Model
+			# General change event.
 			change = sinon.spy (event) -> changeEvent = event
 			model.on "change", change
 			changeEvent = null
+			# Specific change event.
 			changeFoo = sinon.spy (event) -> changeFooEvent = event
 			model.on "change:foo", changeFoo
 			changeFooEvent = null
@@ -81,10 +83,6 @@ describe "Model", ->
 			runs ->
 				expect(change.callCount).toBe 1
 
-		it "should report changes on sub-models"
-
-		it "should not report changes on detached sub-models"
-
 	describe "serialization", ->
 		it "should serialize to a json object", ->
 			model = new Model
@@ -94,14 +92,12 @@ describe "Model", ->
 			expect(json.foo).toBe "bar"
 			expect(json.abc).toBe "def"
 
-		it "should not recursively serialize models"
-
-		xit "should should serialize models recursively", ->
+		it "should not recursively serialize models", ->
 			model = new Model
 				foo: "foo"
 				bar: new Model
 					qwerty: "zxcvbn"
-			json = JSON.stringify model.toJSON()
-			expect(json).toBe '{"foo":"foo","bar":{"qwerty":"zxcvbn"}}'
-
-		xit "should should detect circular references in serialization"
+			json = model.toJSON()
+			expect(typeof json).toBe "object"
+			expect(json.foo).toBe "foo"
+			expect(json.bar instanceof Model).toBe true

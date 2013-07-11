@@ -1,8 +1,18 @@
 Antifreeze.Collection = class Collection
 	Calamity.emitter @prototype
 
-	constructor: ->
-		@_items = []
+	constructor: (values) ->
+		# Process initial values.
+		if values?
+			# Convert supplied collection to array.
+			if values instanceof Collection
+				values = values.toJSON()
+			# Complain if not array supplied array.
+			unless _.isArray values
+				throw new Error "Initial values for Collection must be either Array or Collection"
+		# Default.
+		values or= []
+		@_items = values
 
 	# Adds an element to the collection.
 	# Returns true if the element was added.
@@ -21,7 +31,7 @@ Antifreeze.Collection = class Collection
 		index = @_getIndex(obj)
 		return false if index is false
 		# Remove element.
-		oldVal = @_items.splice(index, 1)[1]
+		oldVal = @_items.splice(index, 1)[0]
 		# Fire change event.
 		@trigger "change",
 			type: "remove"
@@ -44,14 +54,14 @@ Antifreeze.Collection = class Collection
 
 	# Iterator.
 	each: (fn) ->
-		for entry in @_items
-			fn.apply @, [entry]
+		for entry, index in @_items
+			fn.apply @, [entry, index]
 		return @
 
 	toJSON: ->
 		json = []
-		for o in @_items
-			json.push o
+		@each (val) ->
+			json.push val
 		return json
 
 	# Returns the internal array index for the object, or false if it not found.

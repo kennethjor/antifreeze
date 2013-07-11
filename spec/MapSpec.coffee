@@ -8,12 +8,11 @@ describe "Map", ->
 	it "should overwrite existing values"
 	it "should remove values"
 	it "should accept initial Map values and make a copy"
+	it "should allow iteration"
 
 	describe "change events", ->
 		it "should trigger cahnge events when adding an element"
 		it "should trigger change events when removing an element"
-		it "should trigger change events on sub-models"
-		it "should not trigger change events on detached sub-models"
 
 	describe "serialization", ->
 		it "should serialize to a json object"
