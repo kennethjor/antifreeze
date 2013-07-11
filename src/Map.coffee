@@ -20,6 +20,9 @@ Antifreeze.Map = class Map
 			# Replace existing.
 		else
 			oldVal = @_items[index][1]
+			# Check identity of old value.
+			if val is oldVal
+				return null
 			@_items[index] = entry
 			returnVal = oldVal
 		# Fire change event.
@@ -43,7 +46,7 @@ Antifreeze.Map = class Map
 		index = @_getIndexForKey key
 		return null if index is false
 		# Remove and return previous value.
-		returnVal = @_items.splice(index, 1)[1]
+		returnVal = @_items.splice(index, 1)[0][1]
 		# Fire change event.
 		@trigger "change",
 			type: "remove"
