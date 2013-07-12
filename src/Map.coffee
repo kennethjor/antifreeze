@@ -1,10 +1,21 @@
 # A `Map` stores values against keys.
 # Unlike JavaScript objects, the `Map` is able to contain objects as keys.
+
+object_toString = {}.toString
+
 Antifreeze.Map = class Map
 	Calamity.emitter @prototype
 
-	constructor: ->
-		@_items = []
+	constructor: (values) ->
+		if values?
+			throw new Error "Initial values must be another Map" unless values instanceof Map
+			items = []
+			values.each (key, val) ->
+				items.push [key, val]
+			values = items
+		else
+			values = []
+		@_items = values
 
 	# Sets a key in the map.
 	# If the key already exists, the value will be overwritten.
@@ -107,7 +118,7 @@ Antifreeze.Map = class Map
 	# Converts a key object to a string.
 	_getStringForKey: (key) ->
 		if _.isObject key
-			if _.isFunction key.toString
+			if _.isFunction(key.toString) and key.toString isnt object_toString
 				key = key.toString()
 		else
 			key = ""+key
