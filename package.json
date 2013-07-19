@@ -1,7 +1,7 @@
 {
 	"fullname": "Antifreeze",
 	"name": "antifreeze",
-	"version": "0.2.1-dev",
+	"version": "0.2.1",
 	"description": "Client-side MVP framework.",
 	"keywords": ["mvp", "model-view-presenter", "client", "framework", "ui"],
 	"homepage": "https://bitbucket.org/kennethjor/antifreeze",

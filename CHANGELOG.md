@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1 (2013-07-19)
+* *Fix:* Thorough testing and related bugfixes to the `Collection`, `Set`, and `Map` classes.
+
 ## 0.2.0 (2013-07-10)
 * *Feature:* Basic `Collection` implementation.
 * *Feature:* Basic `Set` implementation.
