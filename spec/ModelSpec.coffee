@@ -24,8 +24,11 @@ describe "Model", ->
 
 	it "should accept initial values", ->
 		model = new Model
+			id: "id:42"
 			foo: "foo"
 			bar: "bar"
+		expect(model.id()).toBe "id:42"
+		expect(model.get "id").toBe undefined
 		expect(model.get "foo").toBe "foo"
 		expect(model.get "bar").toBe "bar"
 
@@ -47,6 +50,22 @@ describe "Model", ->
 		expect(keys.length).toBe 2
 		expect(_.contains(keys, "foo")).toBe true
 		expect(_.contains(keys, "bar")).toBe true
+
+	it "should provide an iteration function", ->
+		model.set
+			foo: "FOO"
+			bar: "BAR"
+		i = 0
+		model.each (key, val) ->
+			switch i
+				when 0
+					expect(key).toBe "foo"
+					expect(val).toBe "FOO"
+				when 1
+					expect(key).toBe "bar"
+					expect(val).toBe "BAR"
+			i++
+		expect(i).toBe 2
 
 	describe "change events", ->
 		change = null
@@ -107,3 +126,32 @@ describe "Model", ->
 			expect(model.toJSON().id).toBe undefined
 			model.id "valid"
 			expect(model.toJSON().id).toBe "valid"
+
+	describe "cloning", ->
+		beforeEach ->
+			model = new Model
+				id: "id:42"
+				foo: "Foo"
+				bar: "Bar"
+
+		it "should clone all values", ->
+			clone = model.clone()
+			expect(clone).not.toBe model
+			expect(clone.id()).toBe model.id()
+			expect(clone.get "foo").toBe model.get "foo"
+			expect(clone.get "bar").toBe model.get "bar"
+
+		it "should not recursively clone values", ->
+			model2 = new Model x:1
+			model.set model2: model2
+			clone = model.clone()
+			expect(clone.get "model2").toBe model2
+
+		it "should accept a base model object and clone into that rather than creating a new one", ->
+			base = new Model()
+			clone = model.clone base
+			expect(clone).toBe base
+			expect(clone).not.toBe model
+			expect(clone.id()).toBe model.id()
+			expect(clone.get "foo").toBe model.get "foo"
+			expect(clone.get "bar").toBe model.get "bar"

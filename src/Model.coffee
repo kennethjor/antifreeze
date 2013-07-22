@@ -82,6 +82,12 @@ Antifreeze.Model = class Model
 	keys: ->
 		return _.keys @_values
 
+	# Iterator.
+	each: (fn) ->
+		for key, val of @_values
+			fn.apply @, [key, val]
+		return @
+
 	# Serializes the model into a plain JSON object.
 	toJSON: ->
 		json = _.clone @_values
@@ -93,6 +99,16 @@ Antifreeze.Model = class Model
 			delete json.id
 
 		return json
+
+	# Creates a clone of this model.
+	# Extend to properly implement deep cloning where needed.
+	# `baseModel` can be used when extending to provide a base model object to clone into.
+	clone: (baseModel = null) ->
+		baseModel or= new Model
+		baseModel.id @id()
+		@each (key, val) ->
+			baseModel.set key, val
+		return baseModel
 
 	# Serializes the model for persistent storage.
 	# By default this returns a JSON object, but feel free to extend.

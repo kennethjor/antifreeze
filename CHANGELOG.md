@@ -3,6 +3,8 @@
 ## 0.3.0 (dev)
 * *API change:* Default model functions are supplied the values object rather than as context.
 * *API change:* Model serialization now only encodes the `id` set using `id()`.
+* *Feature:* Implemented `Model.clone()` for object cloning.
+* *Feature:* Implemented `Model.each()` for object iteration.
 
 ## 0.2.1 (2013-07-19)
 * *Fix:* Thorough testing and related bugfixes to the `Collection`, `Set`, and `Map` classes.
