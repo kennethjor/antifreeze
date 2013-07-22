@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.1 (dev)
+## 0.3.0 (dev)
 * *API change:* Default model functions are supplied the values object rather than as context.
 * *API change:* Model serialization now only encodes the `id` set using `id()`.
 
