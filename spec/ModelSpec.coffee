@@ -32,15 +32,22 @@ describe "Model", ->
 		expect(model.get "foo").toBe "foo"
 		expect(model.get "bar").toBe "bar"
 
-	it "should accept default values", ->
+	describe "default values", ->
 		class Test extends Model
 			defaults:
-				foo: "foo"
-				bar: "bar"
-		model = new Test
-			bar: "other"
-		expect(model.get "foo").toBe "foo"
-		expect(model.get "bar").toBe "other"
+				foo: "FOO"
+				bar: "BAR"
+
+		it "should be applied when creating the model", ->
+			model = new Test
+			expect(model.get "foo").toBe "FOO"
+			expect(model.get "bar").toBe "BAR"
+
+		it "should be overridden by initially supplied values", ->
+			model = new Test
+				bar: "other"
+			expect(model.get "foo").toBe "FOO"
+			expect(model.get "bar").toBe "other"
 
 	it "should copy values when setting a whole model", ->
 		other = new Model

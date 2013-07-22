@@ -12,7 +12,7 @@ Antifreeze.Model = class Model
 		@_id = null
 		if values?.id?
 			@id values.id
-			values.id = undefined
+			delete values.id
 		# Prepare internal containers.
 		@_values = {}
 		# Populate default values.
@@ -21,7 +21,7 @@ Antifreeze.Model = class Model
 		@set values
 
 	# Populates default values.
-	_defaults: (values) ->
+	_defaults: (values = {}) ->
 		for own key, val of @defaults
 			# Ignore existing values.
 			continue if values[key]?
