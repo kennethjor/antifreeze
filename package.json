@@ -15,7 +15,7 @@
 	"main": "antifreeze.js",
 	"dependencies": {
 		"underscore":               ">= 1.4.4",
-		"calamity":                 ">= 0.3.0",
+		"calamity":                 ">= 0.4.1",
 		"handlebars":               ">= 1.0.12",
 		"rivets":                   ">= 0.5.7",
 		"crossroads":               ">= 0.12.0",
