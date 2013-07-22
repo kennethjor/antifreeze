@@ -7,6 +7,8 @@ Antifreeze.Model = class Model
 	defaults: {}
 
 	# The `Persistor` to use for this model.
+	# The value for this attribute should be a constructor method.
+	# For custom implementations override `getPersistor()`.
 	# This is required for the `save()` function to work.
 	persistor: null
 
@@ -19,6 +21,7 @@ Antifreeze.Model = class Model
 			delete values.id
 		# Prepare internal containers.
 		@_values = {}
+		@_persistor = null
 		# Populate default values.
 		values = @_defaults values
 		# Set values.
@@ -122,10 +125,17 @@ Antifreeze.Model = class Model
 	serialize: ->
 		return @toJSON()
 
+	# Returns a persistor instance to use for this model.
+	# Set the `persistor` class attribute to your desired `Persistor` constructor function, or override this method to add custom functionality.
+	getPersistor: ->
+		unless @_persistor?
+			persistor = @persistor
+			throw new Error "Persistor not defined" unless persistor? and typeof persistor is "function"
+			@_persistor = new persistor()
+		return @_persistor
+
 	# Saves the model through the defined persistor.
 	save: (callback) ->
-		persistor = @persistor
-		throw new Error "Persistor not defined" unless persistor? and persistor instanceof Persistor
-		p = new persistor
-		p.save callback, @
+		persistor = @getPersistor()
+		persistor.save @, callback
 		return @

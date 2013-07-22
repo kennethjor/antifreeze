@@ -7,6 +7,7 @@ files = [
 	"src/Collection.coffee"
 	"src/Set.coffee"
 	"src/Map.coffee"
+	"src/Persistor.coffee"
 	"src/HelperBroker.coffee"
 	"src/helpers/RivetsHelper.coffee"
 	"src/View.coffee"

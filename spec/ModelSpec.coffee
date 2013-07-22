@@ -180,7 +180,7 @@ describe "Model", ->
 			persistor: TestPersistor
 
 		beforeEach ->
-			save = sinon.spy (callback, model) -> callback()
+			save = sinon.spy (model, callback) -> callback()
 			TestPersistor.prototype.save = save
 			done = sinon.spy()
 
@@ -189,13 +189,18 @@ describe "Model", ->
 				model.save()
 			expect(test).toThrow "Persistor not defined"
 
-		it "should auto-construct the persistor, but keep a single instance around"
+		it "should auto-construct the persistor, but keep a single instance around", ->
+			model = new TestModel
+			persistor = model.getPersistor()
+			expect(typeof persistor).toBe "object"
+			expect(persistor instanceof TestPersistor).toBe true
+			expect(model.getPersistor()).toBe persistor
 
 		it "should delegate to the defined persistor, executing the supplied callback when complete", ->
-			model = new TestModel id: "id:42"
+			model = new TestModel
 			model.save(done)
 			waitsFor (-> done.called), "Done never called", 100
 			runs ->
 				expect(save.callCount).toBe 1
 				call = save.getCall 0
-				expect(call.args[1]).toBe model
+				expect(call.args[0]).toBe model
