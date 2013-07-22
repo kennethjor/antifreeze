@@ -101,6 +101,10 @@ Antifreeze.Map = class Map
 				value: value
 		return json
 
+	# Creates a clone of this map.
+	clone: ->
+		return new Map @
+
 	# Returns the internal array index for the key, or false if the key was not found.
 	_getIndexForKey: (key) ->
 		for entry, i in @_items

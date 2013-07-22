@@ -5,6 +5,8 @@
 * *API change:* Model serialization now only encodes the `id` set using `id()`.
 * *Feature:* Implemented `Model.clone()` for object cloning.
 * *Feature:* Implemented `Model.each()` for object iteration.
+* *Feature:* Implemented `Map.clone()`, which is just a proxy for the cosntructor.
+* *Feature:* Added ability for supplying other `Model` instances to `Model.set()`.
 
 ## 0.2.1 (2013-07-19)
 * *Fix:* Thorough testing and related bugfixes to the `Collection`, `Set`, and `Map` classes.

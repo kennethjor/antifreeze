@@ -40,14 +40,18 @@ Antifreeze.Model = class Model
 
 	# Sets one or more values.
 	# Can be called with a key and value, or with an object.
+	# If a `Model` instance is supplied directly, the values will be copied over directly.
 	set: (keyOrObj, val) ->
 		return unless keyOrObj
-		# Convert to object.
+		# Convert any supplied model.
 		obj = keyOrObj
+		if obj instanceof Model
+			@id obj.id()
+			obj = obj.toJSON()
+		# Convert to object.
 		unless _.isObject obj
-			o = {}
-			o[obj] = val
-			obj = o
+			obj = {}
+			obj[keyOrObj] = val
 		# Prepare container to hold old values for changed keys
 		triggers = {}
 		# Iterate over object.
@@ -89,6 +93,7 @@ Antifreeze.Model = class Model
 		return @
 
 	# Serializes the model into a plain JSON object.
+	# This method does not serialize recursively, and extending it to do so is not recommended.
 	toJSON: ->
 		json = _.clone @_values
 		# Set ID if we have it.

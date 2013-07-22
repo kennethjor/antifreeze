@@ -42,6 +42,14 @@ describe "Model", ->
 		expect(model.get "foo").toBe "foo"
 		expect(model.get "bar").toBe "other"
 
+	it "should copy values when setting a whole model", ->
+		other = new Model
+			id: "id:42"
+			foo: "FOO"
+		model.set other
+		expect(model.id()).toBe other.id()
+		expect(model.get "foo").toBe other.get "foo"
+
 	it "should provide a list of keys", ->
 		model = new Model
 			foo: "FOO"
