@@ -107,13 +107,11 @@ Antifreeze.Model = class Model
 
 	# Creates a clone of this model.
 	# Extend to properly implement deep cloning where needed.
-	# `baseModel` can be used when extending to provide a base model object to clone into.
-	clone: (baseModel = null) ->
-		baseModel or= new Model
-		baseModel.id @id()
-		@each (key, val) ->
-			baseModel.set key, val
-		return baseModel
+	# `base` can be used when extending to provide a base model object to clone into.
+	clone: (base = null) ->
+		base or= new Model
+		base.set @
+		return base
 
 	# Serializes the model for persistent storage.
 	# By default this returns a JSON object, but feel free to extend.
