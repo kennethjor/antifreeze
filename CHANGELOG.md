@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1 (dev)
+* *API change:* Default model functions are supplied the values object rather than as context.
+
 ## 0.2.1 (2013-07-19)
 * *Fix:* Thorough testing and related bugfixes to the `Collection`, `Set`, and `Map` classes.
 

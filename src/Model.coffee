@@ -1,8 +1,9 @@
 Antifreeze.Model = class Model
 	Calamity.emitter @prototype
 
-	# Default values are assigned automatically.
-	# Any functions will be executed in the context of the values object, and the return value will be the value.
+	# Default values to be assigned automatically.
+	# Any functions defined here will be executed and their return values will be used as the default.
+	# These functions are executed once per needed default value, and they take the current values object as their only argument.
 	defaults: {}
 
 	# Constructor.
@@ -26,7 +27,7 @@ Antifreeze.Model = class Model
 			continue if values[key]?
 			# Execute default function.
 			if _.isFunction val
-				values[key] = val.apply values
+				values[key] = val values
 			else
 				values[key] = val
 		return values
