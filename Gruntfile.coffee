@@ -44,6 +44,12 @@ module.exports = (grunt) ->
 				files:
 					"build/sample/sample.js": ["sample/sample.coffee"]
 
+		jessie:
+			all:
+				expand: true
+				cwd: ""
+				src: "build/spec/**/*.js"
+
 		concat:
 			# Packages the final JS file with a header
 			dist:
@@ -85,18 +91,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks "grunt-contrib-less"
 	grunt.loadNpmTasks "grunt-contrib-requirejs"
 	grunt.loadNpmTasks "grunt-contrib-watch"
-	#grunt.loadNpmTasks "grunt-notify"
-
-	grunt.registerTask "jessie", "Runs Jasmine specs through Jessie.", ->
-		done = @async()
-		command = "./node_modules/jessie/bin/jessie build/spec"
-		exec command, (err, stdout, stderr) ->
-			console.log stdout
-			if err
-				grunt.warn err
-				done false
-			else
-				done true
+	grunt.loadNpmTasks "grunt-jessie"
 
 	# Build sample site
 	grunt.registerTask "sample", ["coffee:sample", "copy:sample"]
