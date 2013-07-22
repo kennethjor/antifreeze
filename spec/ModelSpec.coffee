@@ -3,13 +3,15 @@ sinon = require "sinon"
 {Model} = require "../antifreeze"
 
 describe "Model", ->
+	model = null
+	beforeEach ->
+		model = new Model
+
 	it "should be empty when first created", ->
-		model = new Model()
 		json = model.toJSON()
 		expect(_.keys(json).join(",")).toEqual ""
 
 	it "should set and get values", ->
-		model = new Model
 		model.set "byString", "yes"
 		model.set byObject: "also"
 		model.set
@@ -47,13 +49,11 @@ describe "Model", ->
 		expect(_.contains(keys, "bar")).toBe true
 
 	describe "change events", ->
-		model = null
 		change = null
 		changeEvent = null
 		changeFoo = null
 		changeFooEvent = null
 		beforeEach ->
-			model = new Model
 			# General change event.
 			change = sinon.spy (event) -> changeEvent = event
 			model.on "change", change
@@ -101,3 +101,9 @@ describe "Model", ->
 			expect(typeof json).toBe "object"
 			expect(json.foo).toBe "foo"
 			expect(json.bar instanceof Model).toBe true
+
+		it "should serialize the explicitly set id value and ignore any values set with set()", ->
+			model.set id: "invalid"
+			expect(model.toJSON().id).toBe undefined
+			model.id "valid"
+			expect(model.toJSON().id).toBe "valid"

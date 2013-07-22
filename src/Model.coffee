@@ -85,10 +85,13 @@ Antifreeze.Model = class Model
 	# Serializes the model into a plain JSON object.
 	toJSON: ->
 		json = _.clone @_values
-		# Convert children to JSON.
-		#for own key, val of json
-		#	if val and typeof val.toJSON is "function"
-		#		json[key] = val.toJSON()
+		# Set ID if we have it.
+		if @_id?
+			json.id = @_id
+		# Otherwise make sure the serialized form does not contain an ID.
+		else
+			delete json.id
+
 		return json
 
 	# Serializes the model for persistent storage.
