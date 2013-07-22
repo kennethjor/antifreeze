@@ -6,6 +6,10 @@ Antifreeze.Model = class Model
 	# These functions are executed once per needed default value, and they take the current values object as their only argument.
 	defaults: {}
 
+	# The `Persistor` to use for this model.
+	# This is required for the `save()` function to work.
+	persistor: null
+
 	# Constructor.
 	constructor: (values) ->
 		# ID.
@@ -117,3 +121,11 @@ Antifreeze.Model = class Model
 	# By default this returns a JSON object, but feel free to extend.
 	serialize: ->
 		return @toJSON()
+
+	# Saves the model through the defined persistor.
+	save: (callback) ->
+		persistor = @persistor
+		throw new Error "Persistor not defined" unless persistor? and persistor instanceof Persistor
+		p = new persistor
+		p.save callback, @
+		return @

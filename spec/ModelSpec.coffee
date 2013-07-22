@@ -1,6 +1,6 @@
 _ = require "underscore"
 sinon = require "sinon"
-{Model} = require "../antifreeze"
+{Model, Persistor} = require "../antifreeze"
 
 describe "Model", ->
 	model = null
@@ -170,3 +170,32 @@ describe "Model", ->
 			expect(clone.id()).toBe model.id()
 			expect(clone.get "foo").toBe model.get "foo"
 			expect(clone.get "bar").toBe model.get "bar"
+
+	describe "persistence", ->
+		save = null
+		done = null
+
+		class TestPersistor extends Persistor
+		class TestModel extends Model
+			persistor: TestPersistor
+
+		beforeEach ->
+			save = sinon.spy (callback, model) -> callback()
+			TestPersistor.prototype.save = save
+			done = sinon.spy()
+
+		it "should complain if not persistor is defined", ->
+			test = ->
+				model.save()
+			expect(test).toThrow "Persistor not defined"
+
+		it "should auto-construct the persistor, but keep a single instance around"
+
+		it "should delegate to the defined persistor, executing the supplied callback when complete", ->
+			model = new TestModel id: "id:42"
+			model.save(done)
+			waitsFor (-> done.called), "Done never called", 100
+			runs ->
+				expect(save.callCount).toBe 1
+				call = save.getCall 0
+				expect(call.args[1]).toBe model

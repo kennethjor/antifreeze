@@ -1,0 +1,2 @@
+Antifreeze.Persistor = class Persistor
+
