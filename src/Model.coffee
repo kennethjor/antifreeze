@@ -120,11 +120,6 @@ Antifreeze.Model = class Model
 		base.set @
 		return base
 
-	# Serializes the model for persistent storage.
-	# By default this returns a JSON object, but feel free to extend.
-	serialize: ->
-		return @toJSON()
-
 	# Returns a persistor instance to use for this model.
 	# Set the `persistor` class attribute to your desired `Persistor` constructor function, or override this method to add custom functionality.
 	getPersistor: ->
