@@ -17,7 +17,7 @@
 		"underscore":               ">= 1.4.4",
 		"calamity":                 ">= 0.4.1",
 		"handlebars":               ">= 1.0.12",
-		"rivets":                   "= 0.5.8", // @todo anything aboe 0.5.8 is broken, will have to look into it.
+		"rivets":                   "= 0.5.8",
 		"crossroads":               ">= 0.12.0",
 		"hasher":                   ">= 1.1.4"
 	},
