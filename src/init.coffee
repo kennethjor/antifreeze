@@ -53,7 +53,7 @@ else if typeof module isnt "undefined" and module.exports
 	module.exports = Antifreeze
 # AMD
 else if typeof define is "function" and define.amd
-	define ["antifreeze"], Antifreeze
+	define ["underscore", "calamity", "rivets", "hasher", "crossroads", "async"], Antifreeze
 # Browser
 else
 	root["Antifreeze"] = Antifreeze
