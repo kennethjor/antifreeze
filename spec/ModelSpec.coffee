@@ -205,24 +205,23 @@ describe "Model", ->
 				expect(call.args[0]).toBe model
 
 	describe "relations", ->
-		class ForeignModel extends Model
 		class RelationalModel extends Model
 			persistor: TestPersistor
 			relations:
 				foo:
-					model: ForeignModel
+					model: Model
 				bar:
 					collection: Collection
-					model: ForeignModel
+					model: Model
 		model = null
 		foo = null
 		bar = [null,null,null]
 		beforeEach ->
-			foo = new ForeignModel
+			foo = new Model
 			foo.id "foo"
-			bar[0] = new ForeignModel
-			bar[1] = new ForeignModel
-			bar[2] = new ForeignModel
+			bar[0] = new Model
+			bar[1] = new Model
+			bar[2] = new Model
 			bar[0].id "bar:0"
 			bar[1].id "bar:1"
 			bar[2].id "bar:2"
@@ -269,3 +268,21 @@ describe "Model", ->
 				expect(collection.get 0).toBe bar[0]
 				expect(collection.get 1).toBe bar[1]
 				expect(collection.get 2).toBe bar[2]
+
+#		it "should complain if model relations do not have an ID when saving", ->
+#			done = sinon.spy()
+#			model.set "foo", new Model
+#			model.save done
+#			waitsFor (-> done.called), "Done never called", 100
+#			runs ->
+#				err = done.getCall(0).args[0]
+#				expect(err.message).toBe "Relation \"foo\" does not have an ID when saving model"
+
+		it "should complain if collection relation entries do not have an ID when saving", ->
+			done = sinon.spy()
+			model.get("bar").add new Model
+			model.save done
+#			waitsFor (-> done.called), "Done never called", 100
+			#runs ->
+			#	err = done.getCall(0).args[0]
+			#	expect(err.message).toBe "Entry in collection relation \"bar\" does not have an ID when saving model"

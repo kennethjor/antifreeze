@@ -154,9 +154,19 @@ Antifreeze.Model = class Model
 		return @_persistor
 
 	# Saves the model through the defined persistor.
-	save: (callback) ->
+	save: (done) ->
 		persistor = @getPersistor()
-		persistor.save @, callback
+		# Check relations for IDs. We can't save ID references unless all relations were previously saved.
+		for own field, relation of @relations
+			val = @get field
+			continue if _.isEmpty val
+			if relation.collection?
+				val.each (entry) ->
+					do (entry) -> _.defer -> done new Error "Entry in collection relation \"#{field}\" does not have an ID when saving model" unless entry.id()?
+			else
+				do (val) -> _.defer -> done new Error "Relation \"#{field}\" does not have an ID when saving model" unless val.id()?
+		# Execute save.
+		persistor.save @, done
 		return @
 
 	# Fetches all the defined relations.

@@ -20,9 +20,11 @@ module.exports = class TestPersistor extends Persistor
 		unless _db[id]?
 			_.defer -> callback new Error "not-found"
 			return
-		_.defer => callback null, _db[id]
+		if _.isFunction callback
+			_.defer => callback null, _db[id]
 
 	save: (model, callback) ->
 		id = model.id()
 		_db[id] = model
-		_.defer -> callback null
+		if _.isFunction callback
+			_.defer -> callback null
