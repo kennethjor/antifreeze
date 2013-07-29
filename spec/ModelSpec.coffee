@@ -1,6 +1,7 @@
 _ = require "underscore"
 sinon = require "sinon"
-{Model, Persistor} = require "../antifreeze"
+{Model, Persistor, Collection} = require "../antifreeze"
+TestPersistor = require "./TestPersistor"
 
 describe "Model", ->
 	model = null
@@ -117,8 +118,8 @@ describe "Model", ->
 			runs ->
 				expect(change.callCount).toBe 1
 
-	describe "serialization", ->
-		it "should serialize to a json object", ->
+	describe "toJSON", ->
+		it "should convert to a json object", ->
 			model = new Model
 				foo: "bar"
 				abc: "def"
@@ -175,32 +176,96 @@ describe "Model", ->
 		save = null
 		done = null
 
-		class TestPersistor extends Persistor
 		class TestModel extends Model
 			persistor: TestPersistor
 
 		beforeEach ->
-			save = sinon.spy (model, callback) -> callback()
-			TestPersistor.prototype.save = save
+			model = new TestModel
+			save = sinon.spy model.getPersistor(), "save"
 			done = sinon.spy()
 
 		it "should complain if not persistor is defined", ->
+			model = new Model
 			test = ->
 				model.save()
 			expect(test).toThrow "Persistor not defined"
 
 		it "should auto-construct the persistor, but keep a single instance around", ->
-			model = new TestModel
 			persistor = model.getPersistor()
 			expect(typeof persistor).toBe "object"
 			expect(persistor instanceof TestPersistor).toBe true
 			expect(model.getPersistor()).toBe persistor
 
 		it "should delegate to the defined persistor, executing the supplied callback when complete", ->
-			model = new TestModel
 			model.save(done)
 			waitsFor (-> done.called), "Done never called", 100
 			runs ->
 				expect(save.callCount).toBe 1
 				call = save.getCall 0
 				expect(call.args[0]).toBe model
+
+	describe "relations", ->
+		class ForeignModel extends Model
+		class RelationalModel extends Model
+			persistor: TestPersistor
+			relations:
+				foo:
+					model: ForeignModel
+				bar:
+					collection: Collection
+					model: ForeignModel
+		model = null
+		foo = null
+		bar = [null,null,null]
+		beforeEach ->
+			foo = new ForeignModel
+			foo.id "foo"
+			bar[0] = new ForeignModel
+			bar[1] = new ForeignModel
+			bar[2] = new ForeignModel
+			bar[0].id "bar:0"
+			bar[1].id "bar:1"
+			bar[2].id "bar:2"
+			TestPersistor.add foo, bar
+			model = new RelationalModel
+			model.set
+				foo: foo
+				bar: new Collection bar
+
+		afterEach ->
+			TestPersistor.reset()
+
+		it "should not fetch anything if all relations are loaded", ->
+			load = sinon.spy model.getPersistor(), "load"
+			done = sinon.spy()
+			model.fetch done
+			waitsFor (-> done.called), "Done never called", 100
+			runs ->
+				expect(load.callCount).toBe 0
+				call = done.getCall 0
+				expect(call.args[0]).toBe null
+
+		it "should serialize relations to ID", ->
+			serial = model.serialize()
+			expect(serial.foo).toBe "foo"
+			expect(JSON.stringify(serial.bar)).toBe JSON.stringify(["bar:0","bar:1","bar:2"])
+
+		it "should contain the raw IDs when deserializing", ->
+			model = new RelationalModel model.serialize()
+			expect(model.get "foo").toBe "foo"
+			expect(JSON.stringify(model.get "bar")).toBe JSON.stringify(["bar:0","bar:1","bar:2"])
+
+		it "should fetch all relations", ->
+			model = new RelationalModel model.serialize()
+			#load = sinon.spy model.getPersistor(), "load"
+			done = sinon.spy()
+			model.fetch done
+			waitsFor (-> done.called), "Done never called", 100
+			runs ->
+				#expect(load.callCount).toBe 4
+				expect(model.get "foo").toBe foo
+				collection = model.get "bar"
+				expect(collection.size()).toBe 3
+				expect(collection.get 0).toBe bar[0]
+				expect(collection.get 1).toBe bar[1]
+				expect(collection.get 2).toBe bar[2]

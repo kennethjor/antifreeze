@@ -9,6 +9,7 @@ if typeof require is "function"
 	Rivets = require "rivets"
 	Hasher = require "hasher" if @window?
 	Crossroads = require "crossroads"
+	Async = require "async"
 else
 	# Underscore.
 	unless typeof root._ is "function"
@@ -30,6 +31,10 @@ else
 	unless typeof root.crossroads is "object"
 		throw new Error "Failed to load Crossroads from global namespace"
 	Crossroads = root.crossroads
+	# Async
+	unless typeof root.async is "object"
+		throw new Error "Failed to load Async from global namespace"
+	Async = root.async
 
 # Import underscore if necessary.
 if typeof root._ is "undefined" and typeof require is "function"

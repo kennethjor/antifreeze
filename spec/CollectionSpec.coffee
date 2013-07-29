@@ -27,6 +27,12 @@ describe "Collection", ->
 		expect(collection.contains val2).toBe true
 		expect(collection.contains val3).toBe false
 
+	it "should return specific values", ->
+		collection.add val1
+		expect(collection.get 0).toBe val1
+		expect(collection.get 1).toBe null
+		expect(collection.get -1).toBe null
+
 	it "should remove values", ->
 		# Remove non-existant value.
 		expect(collection.remove val1).toBe false

@@ -6,6 +6,9 @@ Antifreeze.Model = class Model
 	# These functions are executed once per needed default value, and they take the current values object as their only argument.
 	defaults: {}
 
+	# Defined relations.
+	relations: {}
+
 	# The `Persistor` to use for this model.
 	# The value for this attribute should be a constructor method.
 	# For custom implementations override `getPersistor()`.
@@ -112,6 +115,27 @@ Antifreeze.Model = class Model
 
 		return json
 
+	# Serializes the model to a JSON object.
+	# `serialize` is different from `toJSON` in that it will convert relations to IDs.
+	# Any other recursive serialization should be handled by overriding this method.
+	serialize: ->
+		json = @toJSON()
+		for own field, relation of @relations
+			val = json[field]
+			continue unless val?
+			# Collections.
+			if relation.collection?
+				val = new relation.collection val if _.isArray val
+				collectionArray = []
+				val.each (collectionVal) ->
+					return unless collectionVal instanceof relation.model
+					collectionArray.push collectionVal.id()
+				json[field] = collectionArray
+			# Models
+			else if relation.model? and val instanceof relation.model
+				json[field] = val.id()
+		return json
+
 	# Creates a clone of this model.
 	# Extend to properly implement deep cloning where needed.
 	# `base` can be used when extending to provide a base model object to clone into.
@@ -134,3 +158,70 @@ Antifreeze.Model = class Model
 		persistor = @getPersistor()
 		persistor.save @, callback
 		return @
+
+	# Fetches all the defined relations.
+	fetch: (done) ->
+		persistor = @getPersistor()
+		# Final results container.
+		results = {}
+		# Create a list of IDs which need to be fetched and the field they belong to.
+		ids = []
+		for own field, relation of @relations
+			current = @get field
+			# If relation is a collection.
+			if relation.collection?
+				# Check is a collection is already initialised/loaded.
+				continue if current instanceof relation.collection
+				# Initialise empty collection.
+				results[field] = new relation.collection
+				# If current is empty, take no further action.
+				continue if _.isEmpty current
+				# Current value must be an array.
+				throw new Error "#{field} is not empty and is not an array" unless _.isArray current
+				# Iterate over all values and add them to the list.
+				for id in current
+					ids.push [field, id]
+			# Relation is not a collection, must be a model.
+			else
+				# Skip if loaded.
+				continue if current instanceof relation.model
+				# Check if ID and add it to the list.
+				continue if _.isEmpty current
+				ids.push [field, current]
+		# Now we have a list of IDs to fetch, create an array of fetcher functions.
+		fetchers = []
+		for def in ids
+			field = def[0]
+			id = def[1]
+			fetchers.push do (field, id) => (done) =>
+				persistor.load id, (err, model) =>
+					# Proxy errors.
+					if err
+						done err
+						return
+					# Pass result on.
+					done null, [field, model]
+		# Execute all the fetchers.
+		Async.parallel fetchers, (err, fetchResults) =>
+			# Proxy error.
+			if err
+				done err
+				return
+			# Initialise all collections.
+			for field, relation in @relations
+				if relation.collection?
+					results[field] = new relation.collection unless results[field]?
+			# We now have an array of a bunch of models, add them to the results object.
+			for def in fetchResults
+				field = def[0]
+				model = def[1]
+				relation = @relations[field]
+				# If collection, add
+				if relation.collection?
+					results[field].add model
+				# If model, set.
+				else
+					results[field] = model
+			# All results collected, set it.
+			@set results
+			done null

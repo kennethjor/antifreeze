@@ -40,6 +40,12 @@ Antifreeze.Collection = class Collection
 		# Return old value.
 		return true
 
+	# Returns the object at the specified index, or null if it doesn't exist.
+	get: (index) ->
+		if 0 <= index < @_items.length
+			return @_items[index]
+		return null
+
 	# Returns true of this collection contains the supplied element.
 	contains: (obj) ->
 		return @_getIndex(obj) isnt false

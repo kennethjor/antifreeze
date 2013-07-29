@@ -9,6 +9,7 @@
 * *Feature:* Implemented `Map.clone()`, which is just a proxy for the cosntructor.
 * *Feature:* Added ability for supplying other `Model` instances to `Model.set()`.
 * *Feature:* Added `Persistor` class.
+* *Feature:* Added support for `relations` configuration on `Model`.
 * *Fix:* Default values would cause a crash when model were contructed without initial values.
 
 ## 0.2.1 (2013-07-19)
