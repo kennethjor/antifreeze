@@ -1,19 +1,19 @@
 # Changelog
 
-## 0.3.0 (dev)
+## 0.3.0 (2013-07-30)
 * *API change:* Default model functions are supplied the values object rather than as context.
 * *API change:* Model serialization now only encodes the `id` set using `id()`.
 * *API change:* Removed the `serialize()` function from `Model`. This should be explicitly implemented.
 * *Feature:* Implemented `Model.clone()` for object cloning.
 * *Feature:* Implemented `Model.each()` for object iteration.
-* *Feature:* Implemented `Map.clone()`, which is just a proxy for the cosntructor.
+* *Feature:* Implemented `Map.clone()`, which is just a proxy for the constructor.
 * *Feature:* Added ability for supplying other `Model` instances to `Model.set()`.
 * *Feature:* Added `Persistor` class.
 * *Feature:* Added support for `relations` configuration on `Model`.
-* *Fix:* Default values would cause a crash when model were contructed without initial values.
+* *Fix:* Default values would cause a crash when model were constructed without initial values.
 
 ## 0.2.1 (2013-07-19)
-* *Fix:* Thorough testing and related bugfixes to the `Collection`, `Set`, and `Map` classes.
+* *Fix:* Thorough testing and related fixes to the `Collection`, `Set`, and `Map` classes.
 
 ## 0.2.0 (2013-07-10)
 * *Feature:* Basic `Collection` implementation.
