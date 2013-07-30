@@ -30,8 +30,8 @@ Antifreeze.Presenter = class Presenter
 		# Setter.
 		if model
 			# Auto-construct model.
-			if _.isObject(model) and model instanceof Model isnt true
-				model = new Model model
+			if _.isObject(model) and model instanceof Discrete.Model isnt true
+				model = new Discrete.Model model
 			# Store model.
 			@_model = model
 			# Propagate to view.

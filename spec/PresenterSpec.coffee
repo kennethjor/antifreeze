@@ -1,6 +1,7 @@
 $ = require "jquery"
 sinon = require "sinon"
-{Presenter, View, Model} = require "../antifreeze"
+{Model} = require "discrete"
+{Presenter, View} = require "../antifreeze"
 
 class TestView extends View
 	constructor: (o) ->

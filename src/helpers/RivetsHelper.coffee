@@ -35,7 +35,7 @@ RivetsHelper = Antifreeze.RivetsHelper =
 	# For all references, Rivets requires the initial level to be a plain object, thus single-level references are not
 	# possible.
 	convertData: (model) ->
-		throw new Error "Model must be a Model" unless model instanceof Model
+		throw new Error "Model must be a Model" unless model instanceof Discrete.Model
 		data = {}
 		for k in model.keys()
 			data[k] = model.get k

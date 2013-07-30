@@ -3,11 +3,6 @@ exec = require("child_process").exec
 files = [
 	"src/init.coffee"
 	"src/ObjectUtil.coffee"
-	"src/Model.coffee"
-	"src/Collection.coffee"
-	"src/Set.coffee"
-	"src/Map.coffee"
-	"src/Persistor.coffee"
 	"src/HelperBroker.coffee"
 	"src/helpers/RivetsHelper.coffee"
 	"src/View.coffee"

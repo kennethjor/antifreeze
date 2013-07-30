@@ -60,8 +60,8 @@ Antifreeze.View = class View
 		# Setter.
 		if model
 			# Auto-construct model.
-			if _.isObject(model) and model instanceof Model isnt true
-				model = new Model model
+			if _.isObject(model) and model instanceof Discrete.Model isnt true
+				model = new Discrete.Model model
 			# Trigger newModel event.
 			if model isnt @_model then @trigger "newModel"
 			# Store model.

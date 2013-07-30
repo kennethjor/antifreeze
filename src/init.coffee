@@ -5,7 +5,8 @@ root = this
 # Load required libs which may or may not be already defined.
 if typeof require is "function"
 	_ = require "underscore"
-	calamity = require "calamity"
+	Calamity = require "calamity"
+	Discrete = require "discrete"
 	Rivets = require "rivets"
 	Hasher = require "hasher" if @window?
 	Crossroads = require "crossroads"
@@ -19,6 +20,10 @@ else
 	unless typeof root.Calamity is "object"
 		throw new Error "Failed to load Calamity from global namespace"
 	Calamity = root.Calamity
+	# Discrete
+	unless typeof root.Discrete is "object"
+		throw new Error "Failed to load Discrete from global namespace"
+	Discrete = root.Discrete
 	# Rivets
 	unless typeof root.rivets is "object"
 		throw new Error "Failed to load Rivets from global namespace"
@@ -53,7 +58,7 @@ else if typeof module isnt "undefined" and module.exports
 	module.exports = Antifreeze
 # AMD
 else if typeof define is "function" and define.amd
-	define ["underscore", "calamity", "rivets", "hasher", "crossroads", "async"], Antifreeze
+	define ["underscore", "calamity", "discrete", "rivets", "hasher", "crossroads", "async"], Antifreeze
 # Browser
 else
 	root["Antifreeze"] = Antifreeze

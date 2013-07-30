@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.0 (dev)
+* *API change:* Removed all modelling code into a separate project called `discrete`.
+
 ## 0.3.0 (2013-07-30)
 * *API change:* Default model functions are supplied the values object rather than as context.
 * *API change:* Model serialization now only encodes the `id` set using `id()`.
