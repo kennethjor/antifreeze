@@ -84,8 +84,7 @@ Antifreeze.Model = class Model
 			event = "change:#{key}"
 			@trigger event,
 				model: @
-#				key: key
-#				oldVal: val
+				oldValue: oldVal
 				value: @get key
 
 	# Returns a value on the object.
