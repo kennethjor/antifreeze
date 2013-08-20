@@ -123,13 +123,12 @@ Antifreeze.View = class View
 	# Executes a deferred render.
 	# Do not override this method, instead use `_render()`.
 	render: () ->
-		self = @
 		return if @_renderScheduled
 		@_renderScheduled = true
-		_.defer -> self._renderScheduled = false
-		@trigger "beforeRender"
-		_.defer -> self._render()
-		@trigger "afterRender"
+		_.defer => @trigger "beforeRender"
+		_.defer => @_render()
+		_.defer => @trigger "afterRender"
+		_.defer => @_renderScheduled = false
 		return
 
 	# Executes the internal template if any.
