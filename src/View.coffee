@@ -133,13 +133,21 @@ Antifreeze.View = class View
 
 	# Executes the internal template if any.
 	_callTemplate: () ->
-		return undefined unless _.isFunction @template
+		template = @template
+		return undefined unless _.isFunction template
+		# Get tempalte data.
+		data = @_getTemplateData()
+		# Render.
+		html = template(data)
+		return html
+
+	# Returns the data to be passed to the template.
+	_getTemplateData: ->
 		# Export model data to JSON.
 		data = @model() or {}
 		if _.isFunction data.toJSON
 			data = data.toJSON()
-		html = @template(data)
-		return html
+		return data
 
 	# Adds a view as a subview using the specified name.
 	add: (name, view) ->
