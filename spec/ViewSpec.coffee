@@ -119,10 +119,7 @@ describe "View", ->
 			expect(view._render.callCount).toBe 1
 
 	it "should by default render a provided template with model data", ->
-		templateData = null
-		template = sinon.spy (data) ->
-			templateData = data
-			return "TESTHTML"
+		template = sinon.spy (data) -> return "TESTHTML"
 		class Test extends TestView
 			template: template
 		view = new Test
@@ -132,7 +129,9 @@ describe "View", ->
 		waitsFor (-> template.called), "Template never called", 100
 		runs ->
 			expect(template.callCount).toBe 1
-			expect(templateData.foo).toBe "FOO"
+			call = template.getCall 0
+			expect(call.args[0].foo).toBe "FOO"
+			expect(call.thisValue).toBe view
 			expect(view.element().html()).toBe "TESTHTML"
 
 	it "should hide and show its element", ->

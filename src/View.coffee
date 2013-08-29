@@ -135,10 +135,11 @@ Antifreeze.View = class View
 	_callTemplate: () ->
 		template = @template
 		return undefined unless _.isFunction template
-		# Get tempalte data.
+		# Get template data.
 		data = @_getTemplateData()
 		# Render.
-		html = template(data)
+		boundTemplate = _.bind template, @
+		html = boundTemplate data
 		return html
 
 	# Returns the data to be passed to the template.

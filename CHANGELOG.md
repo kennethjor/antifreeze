@@ -2,6 +2,7 @@
 
 ## 0.4.0 (dev)
 * *API change:* Removed all modelling code into a separate project called `discrete`.
+* *Fix:* Templates are now called with the view as their `this` value.
 
 ## 0.3.0 (2013-07-30)
 * *API change:* Default model functions are supplied the values object rather than as context.
