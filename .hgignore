@@ -1,7 +1,8 @@
-syntax: regexp
+syntax: syntax
 
 node_modules/
-^\.idea/
+bower_components/
+.idea/
 build/
-^npm-debug\.log$
-^antifreeze\.js$
+npm-debug\.log
+antifreeze\.js

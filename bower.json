@@ -1,0 +1,37 @@
+{
+  "name": "antifreeze",
+  "main": "antifreeze.js",
+  "version": "0.4.0-dev.5",
+  "authors": [
+    "Kenneth Jorgensen <kennethjor@gmail.com>",
+    "James Fidler <terrarum@gmail.com> (http://trrrm.com/)"
+  ],
+  "description": "Client-side MVP framework.",
+  "keywords": [
+    "mvp",
+    "model-view-presenter",
+    "client",
+    "framework",
+    "ui"
+  ],
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/kennethjor/antifreeze",
+	"repository": {
+		"type": "hg",
+		"url": "ssh://hg@bitbucket.org/kennethjor/antifreeze"
+	},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+	  "underscore":               "~1.6.0",
+			"calamity":                 "~0.5.0-rc.5",
+			"discrete":                 "~0.1.0-dev.3",
+			"handlebars":               "~1.0.0",
+			"rivets":                   "~0.5.8",
+			"crossroads":               "~0.12.0",
+			"hasher":                   "~1.2.0"
+  }
+}
