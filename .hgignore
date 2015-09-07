@@ -1,4 +1,4 @@
-syntax: syntax
+syntax: glob
 
 node_modules/
 bower_components/
