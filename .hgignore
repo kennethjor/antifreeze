@@ -4,5 +4,5 @@ node_modules/
 bower_components/
 .idea/
 build/
-npm-debug\.log
-antifreeze\.js
+npm-debug.log
+
