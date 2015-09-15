@@ -1,7 +1,7 @@
 {
   "name": "antifreeze",
   "main": "antifreeze.js",
-  "version": "0.4.0-dev.4",
+  "version": "0.4.0-dev",
   "authors": [
     "Kenneth Jorgensen <kennethjor@gmail.com>",
     "James Fidler <terrarum@gmail.com> (http://trrrm.com/)"

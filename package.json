@@ -1,7 +1,7 @@
 {
   "fullname": "Antifreeze",
   "name": "antifreeze",
-  "version": "0.4.0-dev.4",
+  "version": "0.4.0-dev",
   "description": "Client-side MVP framework.",
   "keywords": [
     "mvp",
